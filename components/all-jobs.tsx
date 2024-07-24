@@ -50,10 +50,13 @@ const AllJobs = () => {
       .then((data) => {
         setData(data);
         setFilteredJobs(data);
+        if (data.length > 0) {
+          setSelectedJobId(data[0].id);
+        }
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
-        setData(data);
+        setData([]);
       });
     setIsClient(true);
   }, []);
@@ -75,8 +78,8 @@ const AllJobs = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-16 sm:py-24 lg:py-32 max-w-4xl">
-      <div className="container mx-auto px-4 py-16 sm:py-24 lg:py-32 max-w-4xl">
+    <div className="container mx-auto py-16 sm:py-24 lg:py-32">
+      <div className="max-w-2xl">
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
           Find Your Dream Developer Job
         </h1>
@@ -86,7 +89,7 @@ const AllJobs = () => {
         <div className="w-full max-w-md">
           <Input
             type="search"
-            placeholder="Search Crypto....."
+            placeholder="Search Jobs....."
             name="search"
             value={searchJobs}
             onChange={handleSearch}
@@ -94,61 +97,73 @@ const AllJobs = () => {
         </div>
       </div>
       {isClient ? (
-        <div>
-          {selectedJobId ? (
-            <JobDetails
-              job={data.find((job) => job.id === selectedJobId)}
-              onBack={() => setSelectedJobId(null)}
-            />
-          ) : (
-            <>
-              {data &&
-                Array.isArray(currentJobs) &&
-                currentJobs.map((job: jobType) => (
-                  <div
-                    className="flex gap-6 p-4 border rounded-md mb-2 max-w-xl cursor-pointer"
-                    key={job.id}
-                    onClick={() => handleJobClick(job.id)}
-                  >
-                    <div className="col-span-1">
-                      {job.logo_url ? (
-                        <Image
-                          src={job.logo_url}
-                          alt="Company Logo"
-                          width={64}
-                          height={64}
-                          className="aspect-square rounded-md object-cover border"
-                        />
-                      ) : (
-                        <div className="w-16 h-16 bg-gray-200 rounded-md"></div>
-                      )}
-                    </div>
-                    <div className="col-span-2">
-                      <p className="fon-medium">{job.company}</p>
-                      <h1 className="font-semibold mt-1">{job.title}</h1>
-                      <div className="flex gap-2 mt-1">
-                        <Badge>
-                          {job.max_payment_usd !== null
-                            ? `$${job.max_payment_usd.toLocaleString()}`
-                            : "Competitive"}
-                        </Badge>
-                        <Badge>
-                          {job.country_iso !== null
-                            ? `$${job.country_iso.toLocaleString()}`
-                            : "Worldwide"}
-                        </Badge>
-                      </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-8xl py-16">
+          {/* Job list column */}
+          <div className="md:col-span-1">
+            {data &&
+              Array.isArray(currentJobs) &&
+              currentJobs.map((job: jobType) => (
+                <div
+                  className={`flex gap-6 p-4 border rounded-md mb-2 cursor-pointer ${
+                    selectedJobId === job.id
+                      ? "bg-zinc-50 dark:bg-zinc-950"
+                      : ""
+                  }`}
+                  key={job.id}
+                  onClick={() => handleJobClick(job.id)}
+                >
+                  <div className="col-span-1">
+                    {job.logo_url ? (
+                      <Image
+                        src={job.logo_url}
+                        alt="Company Logo"
+                        width={64}
+                        height={64}
+                        className="aspect-square rounded-md object-cover border"
+                      />
+                    ) : (
+                      <div className="w-16 h-16 bg-zinc-200 rounded-md"></div>
+                    )}
+                  </div>
+                  <div className="col-span-2">
+                    <p className="font-medium">{job.company}</p>
+                    <h1 className="font-semibold mt-1">{job.title}</h1>
+                    <div className="flex gap-2 mt-1">
+                      <Badge>
+                        {job.max_payment_usd !== null
+                          ? `$${job.max_payment_usd.toLocaleString()}`
+                          : "Competitive"}
+                      </Badge>
+                      <Badge>
+                        {job.country_iso !== null
+                          ? `${job.country_iso}`
+                          : "Worldwide"}
+                      </Badge>
                     </div>
                   </div>
-                ))}
-              <PaginationSection
-                totalItems={filteredJobs.length}
-                jobsPerPage={jobsPerPage}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
+                </div>
+              ))}
+            <PaginationSection
+              totalItems={filteredJobs.length}
+              jobsPerPage={jobsPerPage}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          </div>
+
+          {/* Job details column */}
+          <div className="md:col-span-2">
+            {selectedJobId ? (
+              <JobDetails
+                job={data.find((job) => job.id === selectedJobId)}
+                onBack={() => setSelectedJobId(null)}
               />
-            </>
-          )}
+            ) : (
+              <div className="flex items-center justify-center h-full">
+                <p className="text-gray-500">Select a job to view details</p>
+              </div>
+            )}
+          </div>
         </div>
       ) : (
         <div role="status">
@@ -212,7 +227,11 @@ function PaginationSection({
         {pages.map((page, index) => (
           <PaginationItem
             key={index}
-            className={currentPage === page ? "bg-neutral-100 rounded-md" : ""}
+            className={
+              currentPage === page
+                ? "bg-neutral-100 rounded-md dark:text-zinc-950"
+                : ""
+            }
           >
             <PaginationLink onClick={() => setCurrentPage(page)}>
               {page}

@@ -1,6 +1,7 @@
 // components/JobDescription.tsx
 import Image from "next/image";
 import { jobType } from "@/components/all-jobs";
+import Link from "next/link";
 
 type JobDescriptionProps = {
   job: jobType | undefined;
@@ -27,41 +28,54 @@ const JobDescription = ({ job, onBack }: JobDescriptionProps) => {
       .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold mb-4">$1</h1>') // Main headers
       .replace(/^\* (.*$)/gim, '<li class=" pl-6 mb-2">$1</li>') // List items
       .replace(/^\* (.*$)/gim, '<li class=" pl-6 mb-2">$1</li>') // List items
-      .replace(/^(.+)$/gim, '<p class="text-gray-700 mb-4">$1</p>') // Paragraphs
+      .replace(
+        /^(.+)$/gim,
+        '<p class="text-zinc-700 dark:text-zinc-300 mb-4">$1</p>'
+      ) // Paragraphs
       .replace(/(\*\*)(.*?)\1/g, "<strong>$2</strong>"); // Bold text
   };
 
   const technologies = job.technologies || [];
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
-      <button
-        className="mb-4 bg-blue-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-700"
-        onClick={onBack}
-      >
-        Back to Job Listings
-      </button>
-      <div className="flex items-center mb-6">
-        {job.logo_url ? (
-          <Image
-            src={job.logo_url}
-            alt={`${job.company} logo`}
-            width={64}
-            height={64}
-            className="aspect-square rounded-md object-cover border mr-4"
-          />
-        ) : (
-          <div className="w-16 h-16 bg-gray-200 rounded-md mr-4"></div>
-        )}
-        <div>
-          <h2 className="text-xl font-semibold">{job.company}</h2>
-          <p className="text-gray-500">{job.country_iso}</p>
+    <div className="p-6 bg-zin-50 dark:bg-zinc-950 rounded-lg border">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+        <div className="flex items-center gap-4 md:col-span-2">
+          {job.logo_url ? (
+            <Image
+              src={job.logo_url}
+              alt={`${job.company} logo`}
+              width={64}
+              height={64}
+              className="aspect-square rounded-md object-cover border"
+            />
+          ) : (
+            <div className="w-16 h-16 bg-gray-200 rounded-md"></div>
+          )}
+          <div>
+            <h2 className="text-xl font-semibold">{job.company}</h2>
+          </div>
+        </div>
+        <div className="flex justify-end md:col-start-3">
+          <Link
+            href={job.apply_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-blue-600
+            text-white px-4 py-2 rounded-full shadow-md hover:bg-blue-700"
+          >
+            {" "}
+            Apply Now
+          </Link>
         </div>
       </div>
-      <h1 className="text-3xl font-bold mb-4">{job.title}</h1>
+      <h1 className="text-3xl font-bold mt-4">{job.title}</h1>
+      <p className="text-zinc-500 dark:text-zinc-400">
+        {job.country_iso !== null ? `${job.country_iso}` : "Remote, Worldwide"}
+      </p>
       <div className="mb-6">
         <div
-          className="text-gray-700"
+          className="text-zinc-700 dark:text-zinc-50"
           dangerouslySetInnerHTML={{
             __html: renderDescription(job.description),
           }}
@@ -72,24 +86,16 @@ const JobDescription = ({ job, onBack }: JobDescriptionProps) => {
         <ul className="list-disc list-inside">
           {technologies.length > 0 ? (
             technologies.map((tech: string, index: number) => (
-              <li key={index} className="text-gray-700">
+              <li key={index} className="text-zinc-700 dark:text-zinc-50">
                 {tech}
               </li>
             ))
           ) : (
-            <li className="text-gray-700">No technologies listed</li>
+            <li className="text-zinc-700 dark:text-zinc-300">
+              No technologies listed
+            </li>
           )}
         </ul>
-      </div>
-      <div className="flex justify-end">
-        <a
-          href={job.apply_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-blue-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-700"
-        >
-          Apply Now
-        </a>
       </div>
     </div>
   );
