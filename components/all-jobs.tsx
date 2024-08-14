@@ -78,15 +78,15 @@ const AllJobs = () => {
   };
 
   return (
-    <div className="container mx-auto py-16 sm:py-24 lg:py-32">
-      <div className="max-w-2xl">
+    <div className="container mx-auto py-16 sm:py-24 lg:py-20">
+      <div className="max-w-2xl mx-auto text-center">
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
           Find Your Dream Developer Job
         </h1>
-        <p className="text-md sm:text-lg mb-8 text-zinc-400 max-w-md">
+        <p className="text-md sm:text-lg mb-8 text-zinc-400 max-w-md mx-auto">
           Discover opportunities from top tech companies around the world
         </p>
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-md mx-auto">
           <Input
             type="search"
             placeholder="Search Jobs....."
@@ -106,7 +106,7 @@ const AllJobs = () => {
                 <div
                   className={`flex gap-6 p-4 border rounded-md mb-2 cursor-pointer ${
                     selectedJobId === job.id
-                      ? "bg-zinc-50 dark:bg-zinc-950"
+                      ? "bg-zinc-50 dark:bg-zinc-900"
                       : ""
                   }`}
                   key={job.id}

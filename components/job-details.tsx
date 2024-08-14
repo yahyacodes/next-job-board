@@ -1,4 +1,3 @@
-// components/JobDescription.tsx
 import Image from "next/image";
 import { jobType } from "@/components/all-jobs";
 import Link from "next/link";
@@ -16,29 +15,29 @@ const JobDescription = ({ job, onBack }: JobDescriptionProps) => {
       .replace(
         /^### (.*$)/gim,
         '<h3 class="text-lg font-semibold mb-2">$1</h3>'
-      ) // Sub-headers
+      )
       .replace(
         /^#### (.*$)/gim,
         '<h3 class="text-lg font-semibold mb-2">$1</h3>'
-      ) // Sub-headers
+      )
       .replace(
         /^## (.*$)/gim,
         '<h2 class="text-2xl font-semibold mb-4">$1</h2>'
-      ) // Headers
-      .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold mb-4">$1</h1>') // Main headers
-      .replace(/^\* (.*$)/gim, '<li class=" pl-6 mb-2">$1</li>') // List items
-      .replace(/^\* (.*$)/gim, '<li class=" pl-6 mb-2">$1</li>') // List items
+      )
+      .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold mb-4">$1</h1>')
+      .replace(/^\* (.*$)/gim, '<li class=" pl-6 mb-2">$1</li>')
+      .replace(/^\* (.*$)/gim, '<li class=" pl-6 mb-2">$1</li>')
       .replace(
         /^(.+)$/gim,
         '<p class="text-zinc-700 dark:text-zinc-300 mb-4">$1</p>'
-      ) // Paragraphs
-      .replace(/(\*\*)(.*?)\1/g, "<strong>$2</strong>"); // Bold text
+      )
+      .replace(/(\*\*)(.*?)\1/g, "<strong>$2</strong>");
   };
 
   const technologies = job.technologies || [];
 
   return (
-    <div className="p-6 bg-zin-50 dark:bg-zinc-950 rounded-lg border">
+    <div className="p-6 bg-zin-50 dark:bg-background rounded-lg border">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
         <div className="flex items-center gap-4 md:col-span-2">
           {job.logo_url ? (
