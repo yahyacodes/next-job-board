@@ -32,7 +32,7 @@ export default function Navigation() {
 
   return (
     <div className="sticky top-0 z-50 flex items-center justify-between">
-      <NavigationMenu className="lg:w-[60rem] md:w-[40rem] w-[24rem] mx-auto md:border mt-4 border-neutral-300 dark:border-zinc-500 rounded-md p-2 relative bg-white shadow-lg dark:bg-black">
+      <NavigationMenu className="lg:w-[60rem] md:w-[40rem] w-[24rem] mx-auto md:border mt-4 border-neutral-300 dark:border-zinc-500 rounded-md p-2 relative bg-background shadow-lg">
         <NavigationMenuList className="md:w-full md:flex md:items-center md:justify-between">
           <NavigationMenuItem className="xl:mr-24 md:mr-0 md:flex hidden">
             <Link href="/" className="flex gap-2">
