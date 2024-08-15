@@ -12,7 +12,7 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "JobQuest | The Best Place to Find Remote Developer Jobs",
+  title: "DevHire | The Best Place to Find Remote Developer Jobs",
   description: "The Best Place to Find Remote Developer Jobs",
 };
 
