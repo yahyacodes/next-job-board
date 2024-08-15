@@ -62,17 +62,17 @@ export default function Navigation() {
             <div className="flex flex-col md:flex-row">
               <NavigationMenuItem>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  <Link href={"/public"}>About</Link>
+                  <Link href={"/"}>About</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  <Link href={"/"}>Services</Link>
+                  <Link href={"/"}>Contact</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  <Link href={"#pricing"}>Pricing</Link>
+                  <Link href={"/"}>For Companies</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </div>
